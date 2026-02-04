@@ -1,6 +1,7 @@
 requests==2.31.0
 beautifulsoup4==4.12.2
 pandas==2.1.4
+yfinance==0.2.37
 gspread==6.1.2
 oauth2client==4.1.2
-pyyaml==6.0.1
+lxml==4.9.3
