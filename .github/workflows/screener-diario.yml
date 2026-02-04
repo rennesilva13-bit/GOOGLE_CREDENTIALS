@@ -2,7 +2,7 @@ name: 🔍 Screener Fundamentalista Diário
 
 on:
   schedule:
-    - cron: '0 21 * * 1-5'  # 21:00 UTC = 18:00 BRT (horário de fechamento do mercado)
+    - cron: '0 21 * * 1-5'
   workflow_dispatch:
 
 jobs:
@@ -34,7 +34,8 @@ jobs:
           python src/screener.py
         env:
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
-          FUNDAMENTUS_RATE_LIMIT: 3.0
+          FUNDAMENTUS_RATE_LIMIT: 4.0
+          GITHUB_ACTIONS: 'true'  # Flag para desativar Status Invest no GitHub
 
       - name: 💾 Salvar resultados
         if: always()
