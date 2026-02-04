@@ -21,7 +21,7 @@ jobs:
 
       - name: 📦 Instalar dependências
         run: |
-          pip install requests beautifulsoup4 pandas gspread oauth2client pyyaml
+          pip install requests beautifulsoup4 pandas gspread oauth2client pyyaml yfinance lxml
 
       - name: 🔐 Configurar credenciais
         env:
@@ -34,7 +34,7 @@ jobs:
           python src/screener.py
         env:
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
-          FUNDAMENTUS_RATE_LIMIT: 2.5
+          FUNDAMENTUS_RATE_LIMIT: 3.0
 
       - name: 💾 Salvar resultados
         if: always()
