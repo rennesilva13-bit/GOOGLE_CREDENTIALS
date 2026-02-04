@@ -160,7 +160,7 @@ def main():
     
     screener.salvar_resultados(df)
     
-    if os.path.exists('credentials.json') and os.getenv('SPREADSHEET_ID'):
+    if os.path.exists('credentials.json') and os.getenv('1vQoApgSm9_6TBZfa7LwS_2bJiaJEU9piyoWIHMvR2Y0'):
         print("\n☁️  Atualizando Google Sheets...")
         screener.atualizar_sheets(df)
     
