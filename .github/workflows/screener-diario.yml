@@ -1,0 +1,45 @@
+name: 🔍 Screener Fundamentalista Diário
+
+on:
+  schedule:
+    - cron: '0 21 * * 1-5'  # 21:00 UTC = 18:00 BRT
+  workflow_dispatch:
+
+jobs:
+  run_screener:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 📦 Instalar dependências
+        run: |
+          pip install requests beautifulsoup4 pandas gspread oauth2client pyyaml
+
+      - name: 🔐 Configurar credenciais
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        run: |
+          echo "$GOOGLE_CREDENTIALS" > credentials.json
+
+      - name: 📊 Executar screener
+        run: |
+          python src/screener.py
+        env:
+          SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+          FUNDAMENTUS_RATE_LIMIT: 2
+
+      - name: 💾 Salvar resultados
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resultados-${{ github.run_number }}
+          path: resultados.json
+          retention-days: 30
